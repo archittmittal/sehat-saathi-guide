@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Heart } from 'lucide-react';
-import { useLanguage } from '../contexts/LanguageContext';
 
 interface LoadingScreenProps {
   onComplete: () => void;
@@ -18,11 +17,9 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
 }) => {
   const [progress, setProgress] = useState(0);
 
-  // ✅ Correct hook usage (no try/catch)
-  const language = useLanguage();
-
-  const appName = language?.t?.appName ?? 'स्वास्थ्य साथी';
-  const loadingText = language?.t?.loading ?? 'Loading';
+  // Use static values since LoadingScreen loads before LanguageProvider
+  const appName = 'स्वास्थ्य साथी';
+  const loadingText = 'Loading';
 
   const prefersReducedMotion = useMemo(() => {
     if (typeof window === 'undefined') return false;
