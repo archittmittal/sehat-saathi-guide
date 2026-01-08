@@ -2,25 +2,36 @@ import React, { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useCart } from '@/contexts/CartContext';
 import { medicines, categories } from '@/data/medicines';
+import { genericComparison } from '@/data/genericComparison';
+
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
+import GenericComparisonModal from '@/components/GenericComparisonModal';
+
 import { toast } from 'sonner';
 import { Search, ShoppingCart, Star, Tag } from 'lucide-react';
 
 const MedicineStore: React.FC = () => {
   const { t, language } = useLanguage();
   const { addToCart } = useCart();
+
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
+
+  // ✅ MUST be inside component
+  const [compareOpen, setCompareOpen] = useState(false);
+  const [compareData, setCompareData] = useState<any>(null);
 
   const filteredMedicines = medicines.filter((medicine) => {
     const matchesSearch =
       medicine.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       medicine.nameHi.includes(searchQuery);
+
     const matchesCategory =
       selectedCategory === 'all' || medicine.category === selectedCategory;
+
     return matchesSearch && matchesCategory;
   });
 
@@ -32,6 +43,7 @@ const MedicineStore: React.FC = () => {
       price: medicine.price,
       image: medicine.image,
     });
+
     toast.success(
       language === 'hi'
         ? `${medicine.nameHi} कार्ट में जोड़ा गया`
@@ -41,6 +53,7 @@ const MedicineStore: React.FC = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-foreground mb-2">
           {t.medicineStore}
@@ -91,24 +104,43 @@ const MedicineStore: React.FC = () => {
                 alt={language === 'hi' ? medicine.nameHi : medicine.name}
                 className="w-full h-full object-cover"
               />
+
               {medicine.originalPrice > medicine.price && (
                 <Badge className="absolute top-2 right-2 bg-destructive text-destructive-foreground">
                   <Tag className="w-3 h-3 mr-1" />
-                  {Math.round(((medicine.originalPrice - medicine.price) / medicine.originalPrice) * 100)}% OFF
+                  {Math.round(
+                    ((medicine.originalPrice - medicine.price) /
+                      medicine.originalPrice) *
+                      100
+                  )}
+                  % OFF
                 </Badge>
               )}
             </div>
+
             <CardContent className="p-4">
               <h3 className="font-semibold text-foreground mb-1 line-clamp-1">
                 {language === 'hi' ? medicine.nameHi : medicine.name}
               </h3>
+
+              {/* ✅ Generic badge */}
+              {genericComparison?.[medicine.name] && (
+                <Badge className="mb-2 bg-green-100 text-green-700">
+                  Cheaper Generic Available
+                </Badge>
+              )}
+
               <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
-                {language === 'hi' ? medicine.descriptionHi : medicine.description}
+                {language === 'hi'
+                  ? medicine.descriptionHi
+                  : medicine.description}
               </p>
-              
+
               <div className="flex items-center gap-2 mb-3">
                 <Star className="w-4 h-4 text-warning fill-current" />
-                <span className="text-sm text-muted-foreground">{medicine.rating}</span>
+                <span className="text-sm text-muted-foreground">
+                  {medicine.rating}
+                </span>
               </div>
 
               <div className="flex items-center justify-between">
@@ -122,14 +154,32 @@ const MedicineStore: React.FC = () => {
                     </span>
                   )}
                 </div>
-                <Button
-                  size="sm"
-                  onClick={() => handleAddToCart(medicine)}
-                  className="gap-1"
-                >
-                  <ShoppingCart className="w-4 h-4" />
-                  {language === 'hi' ? 'जोड़ें' : 'Add'}
-                </Button>
+
+                <div className="flex gap-2">
+                  {/* ✅ Compare button */}
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    disabled={!genericComparison?.[medicine.name]}
+                    onClick={() => {
+                      const data = genericComparison?.[medicine.name];
+                      if (!data) return;
+                      setCompareData(data);
+                      setCompareOpen(true);
+                    }}
+                  >
+                    Compare
+                  </Button>
+
+                  <Button
+                    size="sm"
+                    onClick={() => handleAddToCart(medicine)}
+                    className="gap-1"
+                  >
+                    <ShoppingCart className="w-4 h-4" />
+                    {language === 'hi' ? 'जोड़ें' : 'Add'}
+                  </Button>
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -139,10 +189,19 @@ const MedicineStore: React.FC = () => {
       {filteredMedicines.length === 0 && (
         <div className="text-center py-12">
           <p className="text-muted-foreground">
-            {language === 'hi' ? 'कोई दवाई नहीं मिली' : 'No medicines found'}
+            {language === 'hi'
+              ? 'कोई दवाई नहीं मिली'
+              : 'No medicines found'}
           </p>
         </div>
       )}
+
+      {/* ✅ Modal MUST be inside return */}
+      <GenericComparisonModal
+        open={compareOpen}
+        onClose={setCompareOpen}
+        data={compareData}
+      />
     </div>
   );
 };
