@@ -31,6 +31,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsConditions from "./pages/TermsConditions";
 import Reminders from "@/pages/Reminders";
 import Offers from "@/components/Offers";
+import SOSButton from "@/components/SOSButton";
 
 const queryClient = new QueryClient();
 
@@ -140,6 +141,8 @@ const App = () => {
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                     <Footer />
+                    {/* Emergency SOS Button - accessible from any screen */}
+                    <SOSButton />
                     {/* NEW: Add the floating scroll to top button */}
                     <ScrollToTopButton />
                   </div>
