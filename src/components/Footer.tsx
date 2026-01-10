@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Heart, Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin, Send } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
 
 const Footer: React.FC = () => {
     const { t } = useLanguage();
@@ -13,10 +11,21 @@ const Footer: React.FC = () => {
     const [message, setMessage] = useState('');
     const [messageType, setMessageType] = useState<'success' | 'error' | ''>('');
 
-    const validateEmail = (email: string): boolean => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-    };
+  return (
+    <footer className="bg-card border-t border-border mt-auto">
+      <div className="container mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+          
+          {/* Brand */}
+          <div className="space-y-4">
+            <Link to="/" className="flex items-center gap-2">
+              <div className="w-10 h-10 bg-gradient-to-br from-primary to-chart-2 rounded-xl flex items-center justify-center shadow-md">
+                <Heart className="w-6 h-6 text-primary-foreground" />
+              </div>
+              <span className="font-bold text-xl text-foreground">
+                {t.appName}
+              </span>
+            </Link>
 
     const handleNewsletterSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -194,12 +203,12 @@ const Footer: React.FC = () => {
                     </div>
                 </div>
 
-                <div className="border-t border-border mt-12 pt-8 text-center text-sm text-muted-foreground">
-                    <p>© {new Date().getFullYear()} {t.appName}. {t.rightsReserved}.</p>
-                </div>
-            </div>
-        </footer>
-    );
+        <div className="border-t border-border mt-12 pt-8 text-center text-sm text-muted-foreground">
+          © {new Date().getFullYear()} {t.appName}. {t.rightsReserved}.
+        </div>
+      </div>
+    </footer>
+  );
 };
 
 export default Footer;
