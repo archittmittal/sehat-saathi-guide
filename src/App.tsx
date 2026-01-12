@@ -18,6 +18,7 @@ import HealthTips from '@/components/HealthTips';
 import MedicineStore from '@/components/MedicineStore';
 import AIAssistant from '@/components/AIAssistant';
 import MedicalHistoryPage from '@/pages/MedicalHistory';
+import HealthDashboard from '@/components/HealthDashboard';
 
 import SarkariYojana from '@/components/SarkariYojana';
 import NearbyHospitals from '@/components/NearbyHospitals';
@@ -121,6 +122,7 @@ const App = () => {
                     <Routes>
                       <Route path="/" element={<Index />} />
                       <Route path="/symptoms" element={<SymptomTracker />} />
+                      <Route path="/dashboard" element={<HealthDashboard />} />
                       <Route path="/tips" element={<HealthTips />} />
                       <Route path="/store" element={<MedicineStore />} />
                       <Route path="/medical-history" element={<MedicalHistoryPage />} />
