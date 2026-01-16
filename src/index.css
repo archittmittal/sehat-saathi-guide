@@ -36,11 +36,11 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
- feature-branch
+ 
  
    --background: 82 100% 94%;
    --foreground: 150 30% 15%;
-    main
+
 
     --card: 0 0% 100%;
     --card-foreground: 150 30% 15%;
@@ -48,7 +48,7 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 150 30% 15%;
 
- feature-branch
+ 
     --primary: 100 55% 71%;   
     --primary-foreground: 140 30% 15%;
 
@@ -60,18 +60,18 @@ All colors MUST be HSL.
 
     --secondary: 82 100% 94%;       /* #F0FFDF */
     --secondary-foreground: 142 72% 25%;
- main
+
 
     --muted: 140 20% 94%;
     --muted-foreground: 150 15% 40%;
 
-feature-branch
+
     --accent: 350 100% 83%;
     --accent-foreground: 140 30% 15%;
 
     --accent: 349 100% 83%;         /* #FFAAB8 */
     --accent-foreground: 150 30% 15%;
- main
+
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
@@ -371,7 +371,7 @@ feature-branch
 .scrollbar-hide::-webkit-scrollbar {
   display: none;  /* Chrome, Safari and Opera */
 }
- feature-branch
+ 
 
 html, body {
   margin: 0;
@@ -394,5 +394,4 @@ body {
   background-attachment: fixed;
 }
 
-=======
- main
+

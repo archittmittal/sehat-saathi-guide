@@ -261,7 +261,7 @@ const Index: React.FC = () => {
       <HealthNewsPopup />
 
       {/* ================= HERO SECTION ================= */}
-      <section className=\"relative min-h-[80vh] sm:min-h-[90vh] flex items-center text-white overflow-hidden\">
+      <section className="relative min-h-[80vh] sm:min-h-[90vh] flex items-center text-white overflow-hidden">
         {/* Video Background */}
         <div className="absolute inset-0 z-0">
           <video
@@ -354,8 +354,8 @@ const Index: React.FC = () => {
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4">
           {features.map((feature) => (
             <Link key={feature.path} to={feature.path}>
-              <Card className="border-2 hover:shadow-xl transition-all hover:-translate-y-1 h-full overflow-hidden\">
-                <CardContent className="p-0\">
+              <Card className="border-2 hover:shadow-xl transition-all hover:-translate-y-1 h-full overflow-hidden">
+                <CardContent className="p-0">
                   <div className={`${feature.color} p-3 sm:p-6 text-center`}>
                     <feature.iconComponent className={`w-8 sm:w-12 h-8 sm:h-12 mx-auto ${feature.iconColor}`} />
                   </div>
