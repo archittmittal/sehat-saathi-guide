@@ -85,15 +85,15 @@ const Navbar: React.FC = () => {
     <nav className="sticky top-0 z-50 w-full bg-background shadow-sm dark:shadow-gray-800 transition-colors duration-300 border-b border-border">
       {/* Top Header Row */}
       <div className="border-b border-border/50">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-16">
+        <div className="container mx-auto px-3 sm:px-4">
+          <div className="flex items-center justify-between h-14 sm:h-16">
             {/* Logo + Express Delivery */}
-            <div className="flex items-center gap-3">
-              <Link to="/" className="flex items-center gap-2 sm:gap-3">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary rounded-xl flex items-center justify-center shadow-md">
-                  <Heart className="w-5 h-5 sm:w-7 sm:h-7 text-primary-foreground" fill="currentColor" />
+            <div className="flex items-center gap-2 sm:gap-3">
+              <Link to="/" className="flex items-center gap-1 sm:gap-2">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-primary rounded-lg sm:rounded-xl flex items-center justify-center shadow-md flex-shrink-0">
+                  <Heart className="w-4 h-4 sm:w-5 sm:h-5 md:w-7 md:h-7 text-primary-foreground" fill="currentColor" />
                 </div>
-                <span className="font-semibold text-base sm:text-xl text-foreground whitespace-nowrap hidden min-[370px]:block">
+                <span className="font-semibold text-xs sm:text-base md:text-xl text-foreground whitespace-nowrap hidden min-[400px]:block">
                   {language === 'en' ? 'Swasthya Saathi' : t.appName}
                 </span>
               </Link>
@@ -154,7 +154,7 @@ const Navbar: React.FC = () => {
                 variant="ghost"
                 size="icon"
                 onClick={toggleTheme}
-                className="hidden sm:flex"
+                className="flex" /*"hidden sm:flex" to flex done.#248*/
                 aria-label="Toggle theme"
               >
                 {isDark ? <Sun className="w-5 h-5 text-yellow-500" /> : <Moon className="w-5 h-5" />}
@@ -247,7 +247,11 @@ const Navbar: React.FC = () => {
                             variant={isActive(item.path) ? 'secondary' : 'ghost'}
                             className={`w-full justify-start gap-4 h-11 ${isActive(item.path) ? 'font-semibold' : ''}`}
                           >
-                            {isStrIcon ? <span className="text-lg">{item.icon}</span> : <item.icon className="w-5 h-5" />}
+                          {isStrIcon ? (
+                              <span className="text-lg">{item.icon as string}</span>
+                          ) : (
+                              <Icon className="w-5 h-5" />
+                          )}
                             {item.label}
                           </Button>
                         </Link>
@@ -270,7 +274,7 @@ const Navbar: React.FC = () => {
                         <Button className="w-full">Log In / Sign Up</Button>
                       </Link>
                     ) : (
-                      <Button variant="destructive" variant="ghost" className="w-full justify-start gap-4 text-destructive hover:text-destructive hover:bg-destructive/10 mt-2" onClick={() => { logout(); setIsOpen(false); }}>
+                      <Button variant="destructive" className="w-full justify-start gap-4 text-destructive hover:text-destructive hover:bg-destructive/10 mt-2" onClick={() => { logout(); setIsOpen(false); }}>
                         <LogOut className="w-5 h-5" />
                         {t.logout}
                       </Button>
@@ -301,7 +305,10 @@ const Navbar: React.FC = () => {
                     variant="ghost"
                     className={`gap-2 rounded-full px-4 h-9 ${active ? 'bg-secondary text-primary hover:bg-secondary/80' : 'text-muted-foreground hover:text-foreground'}`}
                   >
-                    {isStrIcon ? <span>{item.icon}</span> : <Icon className={`w-4 h-4 ${active ? 'fill-current' : ''}`} />}
+                  {isStrIcon
+                    ? <span>{item.icon as string}</span>
+                    : <Icon className={`w-4 h-4 ${active ? 'fill-current' : ''}`} />
+                  }
                     {item.label}
                   </Button>
                 </Link>
