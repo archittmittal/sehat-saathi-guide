@@ -12,10 +12,15 @@ const startServer = async () => {
     logger.info(`Environment: ${process.env.NODE_ENV || 'development'}`);
     logger.info(`Node version: ${process.version}`);
 
-    // Connect to database
-    logger.info("Connecting to database...");
-    await connectDB();
-    logger.info("Database connected successfully");
+    // Try to connect to database (non-blocking)
+    logger.info("Attempting to connect to database...");
+    try {
+      await connectDB();
+      logger.info("Database connected successfully");
+    } catch (dbError) {
+      logger.warn("Database connection failed - some features may be unavailable");
+      logger.warn("Contact form will still work using JSON file storage");
+    }
 
     // Create HTTP server
     const httpServer = createServer(app);

@@ -33,6 +33,7 @@ import Reminders from "@/pages/Reminders";
 import VideoConsultation from '@/pages/VideoConsultation';
 import Offers from "@/components/Offers";
 import OfflineIndicator from "@/components/OfflineIndicator";
+import ContactUs from "@/pages/ContactUs";
 
 const queryClient = new QueryClient();
 
@@ -140,6 +141,7 @@ const App = () => {
                       <Route path="/terms-and-conditions" element={<TermsConditions />} />
                       <Route path="/offers" element={<Offers />} />
                       <Route path="/consultation/:id" element={<VideoConsultation />} />
+                      <Route path="/contact" element={<ContactUs />} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                     <Footer />
